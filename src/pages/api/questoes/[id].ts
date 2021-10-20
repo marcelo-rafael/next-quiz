@@ -7,7 +7,7 @@ export default (req, res) => {
 
   if(unicaQuestaoOuNada.length === 1) {
     const questaoSelecionada = unicaQuestaoOuNada[0].embaralharRespostas()
-    res.status(200).json(questoes[0].converterParaObjeto())
+    res.status(200).json(questaoSelecionada.converterParaObjeto())
   } else {
     res.status(204).send()
   }
