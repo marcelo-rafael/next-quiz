@@ -70,6 +70,7 @@ A simple question and answer project created with Next.js in the front-end with 
   - [ ] Add favicon
   - [ ] Responsive layout
   - [ ] Functionality to add new questions
+  - [ ] Fix Deploy on Vercel bug
 
 ---
 
