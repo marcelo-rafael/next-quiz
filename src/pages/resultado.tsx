@@ -4,7 +4,7 @@ import Estatistica from '../components/Estatistica'
 
 import styles from '../styles/Resultado.module.css'
 
-export default function resultado() {
+export default function Resultado() {
   const router = useRouter()
 
   const total = +router.query.total
