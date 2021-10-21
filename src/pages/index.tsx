@@ -14,23 +14,32 @@ const questaoMock = new QuestaoModel(1, 'Melhor cor:', [
   RespostaModel.certa('Preta')
 ])
 
+const BASE_URL = 'http://localhost:3000/api'
+
 export default function Home() {
-  const [questao, setQuestao] = useState(questaoMock)
-  const questaoRef = useRef<QuestaoModel>()
+  const [idsDasQuestoes, setIdsDasQuestoes] = useState<number[]>([])
+  const [questao, setQuestao] = useState<QuestaoModel>(questaoMock)
 
-  // useEffect(() => {
-  //   questaoRef.current = questao
-  // }, [questao])
+  async function carregarIdsDasQuestoes() {
+    const resp = await fetch(`${BASE_URL}/questionario`)
+    const idsDasQuestoes = await resp.json()
+    console.log(idsDasQuestoes)
+    setIdsDasQuestoes(idsDasQuestoes)
+  }
 
-  // function respostaFornecida(indice: number) {
-  //   setQuestao(questao.responderCom(indice))
-  // }
+  async function carregarQuestao(idQuestao: number) {
+    const resp = await fetch(`${BASE_URL}/questoes/${idQuestao}`)
+    const json = await resp.json()
+    console.log(json)
+  }
 
-  // function tempoEsgotado() {
-  //   if(questaoRef.current.naoRespondida) {
-  //     setQuestao(questaoRef.current.responderCom(-1))
-  //   }
-  // }
+  useEffect(() => {
+    carregarIdsDasQuestoes()
+  },[])
+
+  useEffect(() => {
+    idsDasQuestoes.length > 0 && carregarQuestao(idsDasQuestoes[0])
+  },[idsDasQuestoes])
 
   function questaoRespondida(questao: QuestaoModel) {
 
@@ -41,26 +50,11 @@ export default function Home() {
   }
 
   return (
-    <div style={{
-      display: 'flex',
-      flexDirection: 'column',
-      justifyContent: 'center',
-      alignItems: 'center',
-      height: '100vh'
-    }}>
       <Questionario 
         questao={questao}
         ultima={false}
         questaoRespondida={questaoRespondida}
         irPraProximoPasso={irPraProximoPasso}
       />
-      {/* <Questao 
-        valor={questao}
-        tempoPraResposta={5}
-        respostaFornecida={respostaFornecida}
-        tempoEsgotado={tempoEsgotado}
-        /> */}
-        {/* <Botao texto="Próxima" href="/resultado" /> */}
-    </div>
   )
 }
