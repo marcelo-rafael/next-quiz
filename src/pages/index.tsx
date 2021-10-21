@@ -20,6 +20,12 @@ export default function Home() {
     setQuestao(questao.responderCom(indice))
   }
 
+  function tempoEsgotado() {
+    if(questao.respondida) {
+      setQuestao(questao.responderCom(-1))
+    }
+  }
+
   return (
     <div style={{
       display: 'flex',
@@ -30,6 +36,7 @@ export default function Home() {
       <Questao 
         valor={questao} 
         respostaFornecida={respostaFornecida}
+        tempoEsgotado={tempoEsgotado}
         />
     </div>
   )
